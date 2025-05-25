@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Altın Testi</title>
+  <style>
+    body {
+      text-align: center;
+      font-family: Arial, sans-serif;
+      background-color: #fffce6;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 5vw;
+      margin-top: 50px;
+    }
+
+    .btn {
+      font-size: 5vw;
+      padding: 2vw 5vw;
+      margin: 3vw;
+      cursor: pointer;
+      border: none;
+      border-radius: 10px;
+    }
+
+    #yesBtn {
+      background-color: gold;
+    }
+
+    #noBtn {
+      background-color: gray;
+      color: white;
+    }
+
+    #cat {
+      width: 25vw;
+      max-width: 150px;
+      margin-top: 20px;
+      animation: jump 1s infinite;
+      display: none;
+    }
+
+    @keyframes jump {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .btn {
+        font-size: 6vw;
+        padding: 3vw 6vw;
+      }
+
+      h1 {
+        font-size: 6vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1 id="question">Kendini Ekonomi Bakanı gibi hissediyor musun?</h1>
+
+  <button id="yesBtn" class="btn">Evet</button>
+  <button id="noBtn" class="btn">Hayır</button>
+  <br />
+  <img id="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Zıplayan Kedi" />
+
+  <script>
+    const questions = [
+      "Kendini Ekonomi Bakanı gibi hissediyor musun?",
+      "Altınlarını almak istiyor musun?",
+      "Altınlarını almak istiyorsan fidye ödemeyi kabul ediyor musun?",
+      "Enes’e Giresun dönüşü fındık getirecek misin? (Hayır demeyi deneme 😂)"
+    ];
+
+    let currentQuestion = 0;
+    let hayirCount = 0;
+
+    const questionText = document.getElementById("question");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const catImg = document.getElementById("cat");
+
+    let defaultYesSize = 5; // in vw
+    let yesSize = defaultYesSize;
+
+    noBtn.addEventListener("click", () => {
+      // Eğer son sorudaysa özel kontrol:
+      if (currentQuestion === 3) {
+        hayirCount++;
+        if (hayirCount === 1) {
+          alert("KIRICISIN");
+          return;
+        } else if (hayirCount === 2) {
+          alert("Cansuuuuu 😡");
+          return;
+        } else {
+          alert("Soru otomatik olarak kabul edilmiştir.");
+          moveToNextQuestion();
+        }
+      } else {
+        // Normal hayır davranışı: evet butonunu büyüt
+        yesSize += 1.5;
+        yesBtn.style.fontSize = `${yesSize}vw`;
+        yesBtn.style.padding = `${yesSize / 2}vw ${yesSize}vw`;
+      }
+    });
+
+    yesBtn.addEventListener("click", () => {
+      // Reset yes button size
+      yesSize = defaultYesSize;
+      yesBtn.style.fontSize = `${yesSize}vw`;
+      yesBtn.style.padding = `${yesSize / 2}vw ${yesSize}vw`;
+
+      moveToNextQuestion();
+    });
+
+    function moveToNextQuestion() {
+      hayirCount = 0; // sıfırla
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        questionText.textContent = questions[currentQuestion];
+      } else {
+        questionText.textContent = "Tebrikler!";
+        yesBtn.style.display = "none";
+        noBtn.style.display = "none";
+        catImg.style.display = "inline-block";
+        alert("Bu akşam kahve ısmarlaman şartıyla altınları alabilirsin!");
+      }
+    }
+  </script>
+</body>
+</html>
