@@ -43,6 +43,18 @@
       display: none;
     }
 
+    #whatsappBtn {
+      background-color: #25d366;
+      color: white;
+      padding: 15px 30px;
+      font-size: 20px;
+      border: none;
+      border-radius: 10px;
+      margin-top: 30px;
+      text-decoration: none;
+      display: inline-block;
+    }
+
     @keyframes jump {
       0% { transform: translateY(0); }
       50% { transform: translateY(-20px); }
@@ -69,6 +81,11 @@
   <br />
   <img id="cat" src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" alt="Zıplayan Kedi" />
 
+  <div id="whatsappSection" style="display: none;">
+    <h1>Tebrikler Cansu, bu testi  başarıyla tamamladın şimdi Enes'e yazma vakti 🎉</h1>
+    <a id="whatsappBtn" href="https://wa.me/905345215207" target="_blank">WhatsApp'tan Enes'e Yaz Butonu</a>
+  </div>
+
   <script>
     const questions = [
       "Kendini Ekonomi Bakanı gibi hissediyor musun?",
@@ -84,12 +101,12 @@
     const yesBtn = document.getElementById("yesBtn");
     const noBtn = document.getElementById("noBtn");
     const catImg = document.getElementById("cat");
+    const whatsappSection = document.getElementById("whatsappSection");
 
     let defaultYesSize = 5; // in vw
     let yesSize = defaultYesSize;
 
     noBtn.addEventListener("click", () => {
-      // Eğer son sorudaysa özel kontrol:
       if (currentQuestion === 3) {
         hayirCount++;
         if (hayirCount === 1) {
@@ -99,11 +116,10 @@
           alert("Cansuuuuu 😡");
           return;
         } else {
-          alert("Soru otomatik olarak evet olarak kabul edilmiştir :)");
+          alert("Soru otomatik olarak evet olarak kabul edilmiştir");
           moveToNextQuestion();
         }
       } else {
-        // Normal hayır davranışı: evet butonunu büyüt
         yesSize += 1.5;
         yesBtn.style.fontSize = `${yesSize}vw`;
         yesBtn.style.padding = `${yesSize / 2}vw ${yesSize}vw`;
@@ -111,7 +127,6 @@
     });
 
     yesBtn.addEventListener("click", () => {
-      // Reset yes button size
       yesSize = defaultYesSize;
       yesBtn.style.fontSize = `${yesSize}vw`;
       yesBtn.style.padding = `${yesSize / 2}vw ${yesSize}vw`;
@@ -120,15 +135,16 @@
     });
 
     function moveToNextQuestion() {
-      hayirCount = 0; // sıfırla
+      hayirCount = 0;
       currentQuestion++;
       if (currentQuestion < questions.length) {
         questionText.textContent = questions[currentQuestion];
       } else {
-        questionText.textContent = "Tebrikler!";
+        questionText.style.display = "none";
         yesBtn.style.display = "none";
         noBtn.style.display = "none";
         catImg.style.display = "inline-block";
+        whatsappSection.style.display = "block";
         alert("Bu akşam kahve ısmarlaman şartıyla altınları alabilirsin!");
       }
     }
