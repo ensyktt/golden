@@ -104,6 +104,8 @@
     const whatsappSection = document.getElementById("whatsappSection");
 
     let defaultYesSize = 5; // in vw
+    let defaultVerticalPadding = 2; // in vw
+    const verticalPaddingRatio = defaultVerticalPadding / defaultYesSize;
     let yesSize = defaultYesSize;
 
     noBtn.addEventListener("click", () => {
@@ -122,14 +124,14 @@
       } else {
         yesSize += 1.5;
         yesBtn.style.fontSize = `${yesSize}vw`;
-        yesBtn.style.padding = `${yesSize / 2}vw ${yesSize}vw`;
+        yesBtn.style.padding = `${yesSize * verticalPaddingRatio}vw ${yesSize}vw`;
       }
     });
 
-    yesBtn.addEventListener("click", () => {
-      yesSize = defaultYesSize;
-      yesBtn.style.fontSize = `${yesSize}vw`;
-      yesBtn.style.padding = `${yesSize / 2}vw ${yesSize}vw`;
+      yesBtn.addEventListener("click", () => {
+        yesSize = defaultYesSize;
+        yesBtn.style.fontSize = `${yesSize}vw`;
+        yesBtn.style.padding = `${yesSize * verticalPaddingRatio}vw ${yesSize}vw`;
 
       moveToNextQuestion();
     });
